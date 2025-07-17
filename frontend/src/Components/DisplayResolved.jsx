@@ -27,7 +27,7 @@ const handlenotificationButtonClick = ()=>{
 
   const getData = async () => {
     try {
-      const res = await axios.get("http://localhost:9780/resolving/getAllResolvedItems");
+      const res = await axios.get("https://lostandfound-backend-mrbb.onrender.com/resolving/getAllResolvedItems");
       setproducts(res.data);
       // console.log(products);
     } catch (error) {
