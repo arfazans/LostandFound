@@ -147,6 +147,11 @@ const URL = "https://lostandfound-backend-mrbb.onrender.com"
 
 
   const handleFormSubmit = async (e) => {
+      if (!localStorage.getItem('email')) {
+      return(
+        alert("Please Login First")
+      )
+    }
     e.preventDefault();
 
     const formData = new FormData();
