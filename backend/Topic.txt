@@ -1,0 +1,4 @@
+Multer have been introduced to upload file in the database
+            1. Setup is required for multer to upload image like middleware Setup
+            2. Route have to be update to upload images
+            3. Therefor FormData is used while submitting form data and we have to do it manually not direct addproduct(product) we have to use foreach loop
