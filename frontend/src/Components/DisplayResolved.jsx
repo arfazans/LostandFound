@@ -30,11 +30,8 @@ const handlenotificationButtonClick = ()=>{
 
   const getData = async () => {
     try {
-<<<<<<< HEAD
+
       const res = await axios.get(`${URL}/resolving/getAllResolvedItems`);
-=======
-      const res = await axios.get("https://lostandfound-backend-mrbb.onrender.com/resolving/getAllResolvedItems");
->>>>>>> dcb8ddc9e8010ddf64c675d62db34b721881e1f4
       setproducts(res.data);
       // console.log(products);
     } catch (error) {
