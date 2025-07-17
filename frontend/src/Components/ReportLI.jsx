@@ -488,7 +488,7 @@ const URL = "https://lostandfound-backend-mrbb.onrender.com"
                 </label>
               </div>
               <div className="lg:col-span-1">
-                <textarea onChange={handleChange} name='description' maxLength={40} id="af-submit-application-description" className="py-1.5 sm:py-2 px-3 block w-full border border-gray-300 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" rows="3" placeholder="Write Something about the item which describe it correctly like { color, design, brand, size etc }"></textarea>
+                <textarea onChange={handleChange} name='description' maxLength={90} id="af-submit-application-description" className="py-1.5 sm:py-2 px-3 block w-full border border-gray-300 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" rows="3" placeholder="Write Something about the item which describe it correctly like { color, design, brand, size etc }"></textarea>
               </div>
 
               <div className="lg:col-span-1 flex items-center">
@@ -497,7 +497,7 @@ const URL = "https://lostandfound-backend-mrbb.onrender.com"
                 </label>
               </div>
               <div className="lg:col-span-1">
-                <textarea onChange={handleChange} name='message'maxLength={40} id="af-submit-application-message" className="py-1.5 sm:py-2 px-3 block w-full border border-gray-300 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" rows="3" placeholder="What to do when someone found it"></textarea>
+                <textarea onChange={handleChange} name='message' maxLength={90} id="af-submit-application-message" className="py-1.5 sm:py-2 px-3 block w-full border border-gray-300 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" rows="3" placeholder="What to do when someone found it"></textarea>
               </div>
             </div>
 
