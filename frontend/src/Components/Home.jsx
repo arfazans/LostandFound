@@ -12,6 +12,9 @@ import useNotification from '../CustomHook/useNotification';
 import { useNavigate } from 'react-router-dom'
 
 function Home() {
+const URL = "https://lostandfound-backend-mrbb.onrender.com"
+
+
   const [showMobileSearch, setShowMobileSearch] = useState(false);
   const {getData, products} = useContext(Notecontext);
   const [filterItem, setfileterItem] = useState('all');
@@ -339,7 +342,7 @@ const handlenotificationButtonClick = ()=>{
                 })
                 .map((product) => {
                   // Construct the image URL
-                  const imageUrl = `http://localhost:9780/${product.images}`;
+                  const imageUrl = `${URL}/${product.images}`;
                   // console.log(imageUrl);
 
 

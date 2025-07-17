@@ -42,6 +42,10 @@ const StyledWrapper = styled.div`
 
 function ProductL({ name, messages = 'No Specific Message is Given by the Owner of Item', description = 'No Items Description received from the owner', phoneNumber, imageUrl, OwnerName, userTrack, id }) {
 
+const URL = "https://lostandfound-backend-mrbb.onrender.com"
+
+
+
   const [showOwner, setshowOwner] = useState(false);
   const [showDialogueBox, setshowDialogueBox] = useState(false);
   const [resolvemessage, setresolvemessage] = useState('');
@@ -53,7 +57,7 @@ function ProductL({ name, messages = 'No Specific Message is Given by the Owner 
 
     const resolvingEmail = localStorage.getItem('email');
     try {
-      const res = await axios.get(`http://localhost:9780/user/getUsername?email=${resolvingEmail}`);
+      const res = await axios.get(`${URL}/user/getUsername?email=${resolvingEmail}`);
 
       const myphoto = localStorage.getItem('Image');
       const resolvingusername = res.data;
@@ -75,7 +79,7 @@ function ProductL({ name, messages = 'No Specific Message is Given by the Owner 
       }
 
       try {
-        const res = await axios.post('http://localhost:9780/resolving/createResolvingItem', formData, {
+        const res = await axios.post(`${URL}/resolving/createResolvingItem`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -108,7 +112,7 @@ function ProductL({ name, messages = 'No Specific Message is Given by the Owner 
   const resolverEmail = userTrack.replace('insertedBy', '');
 
   try {
-    const res = await axios.get(`http://localhost:9780/resolving/checkalreadyresolutionsend`, {
+    const res = await axios.get(`${URL}/resolving/checkalreadyresolutionsend`, {
       params: {
         itemId,
         resolvingEmail,
@@ -217,9 +221,7 @@ function ProductL({ name, messages = 'No Specific Message is Given by the Owner 
         </h6>
       </div>
       <div className="mt-auto flex border-t  border-gray-200 divide-x divide-gray-200 dark:border-neutral-700 dark:divide-neutral-700">
-        {/* <a className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-es-xl bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" href="#">
-         {location}
-        </a> */}
+
 
         <button className="cursor-pointer w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-xl bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" type='button' onClick={() => { setshowOwner(!showOwner) }}>
 

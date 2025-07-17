@@ -10,6 +10,11 @@ import useNotification from '../CustomHook/useNotification';
 
 
 function User_DetailCard() {
+
+
+const URL = "https://lostandfound-backend-mrbb.onrender.com"
+
+
   const [showMobileSearch, setShowMobileSearch] = useState(false);
   const [profileImage, setProfileImage] = useState(localStorage.getItem('Image'));
   const [products, setproducts] = useState([]);
@@ -80,7 +85,7 @@ function User_DetailCard() {
         // Changing Username from the backend
     try {
      const currentUsername=  localStorage.getItem('usernamebeforeedit');
-      const res = await axios.put("http://localhost:9780/movingitem/updateusernamefrombackend", {inputValue,currentUsername});
+      const res = await axios.put(`${URL}/movingitem/updateusernamefrombackend`, {inputValue,currentUsername});
       console.log(res);
       console.log("Username Updated Successfully into the backend");
 
@@ -133,7 +138,7 @@ function User_DetailCard() {
 
   const getData = async () => {
     try {
-      const res = await axios.get("http://localhost:9780/products");
+      const res = await axios.get(`${URL}/products`);
       setproducts(res.data);
       // console.log(products);
     } catch (error) {
@@ -520,7 +525,7 @@ function User_DetailCard() {
                   }
                 })
                   .map((product) => {
-                    const imageUrl = `http://localhost:9780/${product.images}`;
+                    const imageUrl = `${URL}/${product.images}`;
                     if (product.type === 'lost') {
                       return <ProductL key={product._id} {...product} imageUrl={imageUrl} />
                     } else if (product.type === 'found') {

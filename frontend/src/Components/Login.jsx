@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Login() {
 
+const URL = "https://lostandfound-backend-mrbb.onrender.com"
 
 
 
@@ -47,7 +48,7 @@ function Login() {
 
 
         try {
-            const response = await axios.post('http://localhost:9780/user/login', formData);
+            const response = await axios.post(`${URL}/user/login`, formData);
             if (response.status === 200) {
                 // Login successful, redirect to dashboard or home page
                 logedIn(formData.email);

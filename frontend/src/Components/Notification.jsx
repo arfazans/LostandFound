@@ -9,6 +9,9 @@ import GeneralMessages from './GeneralMessages';
 
 function Notification() {
 
+    const URL = "https://lostandfound-backend-mrbb.onrender.com"
+
+
     const [resolutionmessages, setresolutionmessages] = useState([]);
     const [generalmessage, setgeneralmessage] = useState([]);
 
@@ -35,7 +38,7 @@ function Notification() {
 
     const getResolutionMessages = async () => {
         try {
-            const res = await axios.get("http://localhost:9780/resolving/getAllResolvingItems");
+            const res = await axios.get(`${URL}/resolving/getAllResolvingItems`);
             setresolutionmessages(res.data);
 
 
@@ -48,7 +51,7 @@ function Notification() {
 
     const getGeneralMessages = async () => {
         try {
-            const res = await axios.get("http://localhost:9780/resolving/getAlldiscardedResolution");
+            const res = await axios.get(`${URL}/resolving/getAlldiscardedResolution`);
             console.log("mera message", res.data);
             setgeneralmessage(res.data);
         } catch (error) {

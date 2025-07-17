@@ -4,10 +4,13 @@ import styled from 'styled-components';
 
 const GeneralMessages = ({ resolverUsername, resolvingUsername, itemName, id, getItem,type }) => {
 
+const URL = "https://lostandfound-backend-mrbb.onrender.com"
+
+
   const deleteMessage = async () => {
     try {
       const messageid = id;
-      const res = await axios.post("http://localhost:9780/resolving/deletediscardResolutionMessage", { id: messageid })
+      const res = await axios.post(`${URL}/resolving/deletediscardResolutionMessage`, { id: messageid })
       getItem();
       console.log(res);
       alert("Message Deleted Succesfull")

@@ -2,6 +2,7 @@ import React, { createContext,useState,useEffect  } from "react";
 import axios from "axios";
 
 
+const URL = "https://lostandfound-backend-mrbb.onrender.com"
 
 
 const Notecontext = createContext();
@@ -16,7 +17,7 @@ const Notestate = ({ children }) => {
 
     try {
 
-      const res = await axios.get("http://localhost:9780/products");
+      const res = await axios.get(`${URL}/products`);
       setproducts(res.data);
       // console.log(products);
     } catch (error) {

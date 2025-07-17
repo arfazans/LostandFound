@@ -7,6 +7,10 @@ import { Notecontext } from '../ContextAPI/Notestate';
 import { useNavigate } from 'react-router-dom';
 
 function Signup() {
+
+const URL = "https://lostandfound-backend-mrbb.onrender.com"
+
+
   const [data, setdata] = useState({})
   const { logedIn } = useContext(Notecontext);
   const navigate = useNavigate();
@@ -41,7 +45,7 @@ function Signup() {
     }
 
     try {
-      const response = await axios.post('http://localhost:9780/user/signUp', data);
+      const response = await axios.post(`${URL}/user/signUp`, data);
       console.log(response.data);
       logedIn(data.email);
       alert('Signed up');

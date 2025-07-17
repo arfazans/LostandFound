@@ -8,6 +8,9 @@ import { useContext } from 'react';
 
 const Itemresolve = ({ message = "no message is given", resolvingUsername = "Unknown", myphoto, itemId, resolvingEmail, resolverEmail, id, getItem }) => {
 
+const URL = "https://lostandfound-backend-mrbb.onrender.com"
+
+
   const { getData } = useContext(Notecontext);
 
   // const allowResolution = (itemID)=>{
@@ -30,7 +33,7 @@ const Itemresolve = ({ message = "no message is given", resolvingUsername = "Unk
       const resolveremail = resolverEmail;
             const type = "allow";
 
-      const res = await axios.post("http://localhost:9780/resolving/creatediscardedResolution", { resolverusername, resolvingusername, itemid,resolvingemail,resolveremail,type });
+      const res = await axios.post(`${URL}/resolving/creatediscardedResolution`, { resolverusername, resolvingusername, itemid,resolvingemail,resolveremail,type });
 
 console.log(res);
 
@@ -40,14 +43,14 @@ console.log(res);
     }
 
 
-    
+
     const selectedId = itemId;
     const ResolvingEmail = resolvingEmail;
     const ResolverEmail = resolverEmail;
     const ResolvingUsername = resolvingUsername;
     const notificationId = id;
     try {
-      const response = await axios.post("http://localhost:9780/movingitem", { ResolvingUsername, selectedId, ResolvingEmail, ResolverEmail, notificationId });
+      const response = await axios.post(`${URL}/movingitem`, { ResolvingUsername, selectedId, ResolvingEmail, ResolverEmail, notificationId });
       // console.log(response.data);
       alert("Resolved SuccessFull")
       getItem();
@@ -69,7 +72,7 @@ console.log(res);
     try {
 
       const notificationId = id;
-      const response = await axios.post("http://localhost:9780/resolving/discardResolvingItem", { id: notificationId });
+      const response = await axios.post(`${URL}/resolving/discardResolvingItem`, { id: notificationId });
       getItem();
       alert("Resolving Permission Discarded");
       // console.log(response);
@@ -88,7 +91,7 @@ console.log(res);
       const resolveremail = resolverEmail;
             const type = "dontallow";
 
-      const res = await axios.post("http://localhost:9780/resolving/creatediscardedResolution", { resolverusername, resolvingusername, itemid,resolvingemail,resolveremail,type });
+      const res = await axios.post(`${URL}/creatediscardedResolution`, { resolverusername, resolvingusername, itemid,resolvingemail,resolveremail,type });
 
 
     } catch (error) {

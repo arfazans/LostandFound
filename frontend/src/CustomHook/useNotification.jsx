@@ -4,6 +4,10 @@ import axios from 'axios';
 
 
 const useNotification = (notificationSound) => {
+
+const URL = "https://lostandfound-backend-mrbb.onrender.com"
+
+
   const [isMounted, setIsMounted] = useState(false);
 
   const [unreadCount, setUnreadCount] = useState(0);
@@ -38,7 +42,7 @@ const playSound = useCallback(() => {
  const handleGeneralNotificationClick = async () => {
   try {
     const user = localStorage.getItem('email');
-    await axios.patch("http://localhost:9780/resolving/generalMessageMarkRead", { userEmail: user });
+    await axios.patch(`${URL}/resolving/generalMessageMarkRead`, { userEmail: user });
     setGeneralUnread(0);
     setUnreadCount(prev => prev - generalUnread); // Subtract only general count
   } catch (error) {
@@ -49,7 +53,7 @@ const playSound = useCallback(() => {
 const handleResolutionNotificationClick = async () => {
   try {
     const user = localStorage.getItem('email');
-    await axios.patch("http://localhost:9780/resolving/resolutionMessageMarkRead", { userEmail: user });
+    await axios.patch(`${URL}/resolving/resolutionMessageMarkRead`, { userEmail: user });
     setResolutionUnread(0);
     setUnreadCount(prev => prev - resolutionUnread); // Subtract only resolution count
   } catch (error) {
@@ -66,8 +70,8 @@ const handleResolutionNotificationClick = async () => {
     try {
       // Fetch both types of notifications
  const [{data: resolutionData}, {data: generalData}] = await Promise.all([
-      axios.get("http://localhost:9780/resolving/getAllResolvingItems"),
-      axios.get("http://localhost:9780/resolving/getAlldiscardedResolution"),
+      axios.get(`${URL}/resolving/getAllResolvingItems`),
+      axios.get(`${URL}/resolving/getAlldiscardedResolution`),
     ]);
 
     const user = localStorage.getItem('email');

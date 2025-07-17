@@ -14,6 +14,9 @@ function DisplayResolved() {
   const [isSearchMode, setIsSearchMode] = useState(false);
   const [products, setproducts] = useState([]);
 
+
+const URL = "https://lostandfound-backend-mrbb.onrender.com"
+
   const navigate = useNavigate();
 
   const { unreadCount, newNotificationReceived,handleGeneralNotificationClick } = useNotification( notificationSound );
@@ -27,7 +30,7 @@ const handlenotificationButtonClick = ()=>{
 
   const getData = async () => {
     try {
-      const res = await axios.get("http://localhost:9780/resolving/getAllResolvedItems");
+      const res = await axios.get(`${URL}/resolving/getAllResolvedItems`);
       setproducts(res.data);
       // console.log(products);
     } catch (error) {

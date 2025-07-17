@@ -76,6 +76,10 @@ const StyledWrapper = styled.div`
 
 
 function ReportLI() {
+
+const URL = "https://lostandfound-backend-mrbb.onrender.com"
+
+
   const [imagePreview, setImagePreview] = useState(null);
   const [items, setitems] = useState({});
   const [imageUpload, setImageUpload] = useState(null);
@@ -179,7 +183,7 @@ function ReportLI() {
     formref.current.reset(); // reset the actual form fields
 
     try {
-      const response = await axios.post('http://localhost:9780/products/report', formData, {
+      const response = await axios.post(`${URL}/products/report`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

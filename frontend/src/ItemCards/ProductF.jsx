@@ -44,6 +44,10 @@ const StyledWrapper = styled.div`
 
 function ProductF({ name, location, description = "Not any item description recieved from founder of the item", phoneNumber, imageUrl, founderName, id, userTrack }) {
 
+
+const URL = "https://lostandfound-backend-mrbb.onrender.com"
+
+
   const [showFounder, setshowFounder] = useState(false);
   const [showDialogueBox, setshowDialogueBox] = useState(false);
   const [resolvemessage, setresolvemessage] = useState('');
@@ -56,7 +60,7 @@ function ProductF({ name, location, description = "Not any item description reci
 
     const resolvingEmail = localStorage.getItem('email');
     try {
-      const res = await axios.get(`http://localhost:9780/user/getUsername?email=${resolvingEmail}`);
+      const res = await axios.get(`${URL}/user/getUsername?email=${resolvingEmail}`);
 
 
       const myphoto = localStorage.getItem('Image');
@@ -75,7 +79,7 @@ function ProductF({ name, location, description = "Not any item description reci
       }
 
       try {
-        const res = await axios.post('http://localhost:9780/resolving/createResolvingItem', formData, {
+        const res = await axios.post(`${URL}/resolving/createResolvingItem`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -112,10 +116,10 @@ function ProductF({ name, location, description = "Not any item description reci
   console.log('resolver is = ' , resolverEmail);
   console.log('resolving is = ' , resolvingEmail);
   console.log("itemid is = ", itemId);
-  
+
 
   try {
-    const res = await axios.get(`http://localhost:9780/resolving/checkalreadyresolutionsend`, {
+    const res = await axios.get(`${URL}/resolving/checkalreadyresolutionsend`, {
       params: {
         itemId,
         resolvingEmail,
