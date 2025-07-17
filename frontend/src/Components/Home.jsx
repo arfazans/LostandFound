@@ -20,6 +20,7 @@ const URL = "https://lostandfound-backend-mrbb.onrender.com"
   const [filterItem, setfileterItem] = useState('all');
   const [searchkey, setsearchkey] = useState("");
   const [isSearchMode, setIsSearchMode] = useState(false);
+
   const navigate = useNavigate();
 
 
@@ -332,6 +333,8 @@ const handlenotificationButtonClick = ()=>{
 
 
             {
+
+              products.length > 0?(
               products
                 .filter(product => {
                   if (isSearchMode) {
@@ -355,13 +358,10 @@ const handlenotificationButtonClick = ()=>{
                       <ProductF key={product._id} id={product._id} {...product} imageUrl={imageUrl} />
                     )
                   }
-
-
-                  // return (
-                  //   <Product key={index} {...product} imageUrl={imageUrl} />
-
-                  // );
                 })
+              ):(
+                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  text-amber-600 text-center">No Data found</div>
+              )
             }
 
           </div>
