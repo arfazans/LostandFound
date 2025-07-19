@@ -326,14 +326,10 @@ const handlenotificationButtonClick = ()=>{
       <div className="card w-full h-max dark:bg-neutral-800 text-white">
 
 
-        <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+        <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto relative">
           {/* <!-- Grid --> */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-
-
-
             {
-
               products.length > 0?(
               products
                 .filter(product => {
@@ -360,7 +356,7 @@ const handlenotificationButtonClick = ()=>{
                   }
                 })
               ):(
-                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  text-amber-600 text-center">No Data found</div>
+                   <div className="absolute top-full left-1/2 -translate-x-1/2 -translate-y-1/2 text-amber-600 text-center">No Data found</div>
               )
             }
 
