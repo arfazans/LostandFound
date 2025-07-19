@@ -302,7 +302,7 @@ const handlenotificationButtonClick = ()=>{
       <div className="max-w-[85rem] min-h-min mx-auto py-4 px-4 sm:px-6 lg:px-8">
         <div className='lg:flex lg:justify-between lg:items-center'>
           <h1 className='font-extrabold text-white text-3xl'>Most Recent Lost and Found Items</h1>
-          <div className='flex flex-col gap-2 sm:flex-row '>
+          <div className='flex flex-col gap-2 sm:flex-row sm:m-3 '>
             <button onClick={litem} className="button1">
               <span className="button_lg">
                 <span className="button_sl"></span>
@@ -334,7 +334,7 @@ const handlenotificationButtonClick = ()=>{
       <div className="card w-full h-max dark:bg-neutral-800 text-white">
 
 
-        <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+        <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto relative">
           {/* <!-- Grid --> */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
@@ -369,7 +369,7 @@ const handlenotificationButtonClick = ()=>{
                   }
                 })
               ):(
-                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  text-amber-600 text-center">No Data found</div>
+                   <div className="absolute top-full left-1/2 -translate-x-1/2 -translate-y-1/2  text-amber-600 text-center">No Data found</div>
               )
             }
 

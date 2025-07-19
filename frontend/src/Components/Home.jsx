@@ -295,7 +295,7 @@ const handlenotificationButtonClick = ()=>{
       <div className="max-w-[85rem] min-h-min mx-auto py-10 px-4 sm:px-6 lg:px-8">
         <div className='lg:flex lg:justify-between lg:items-center'>
           <h1 className='font-extrabold text-white text-3xl'>Most Recent Lost and Found Items</h1>
-          <div className='flex flex-col gap-2 sm:flex-row '>
+          <div className='flex flex-col gap-2 sm:flex-row sm:m-3 '>
             <button onClick={litem} className="button1">
               <span className="button_lg">
                 <span className="button_sl"></span>
