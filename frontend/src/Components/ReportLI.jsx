@@ -200,7 +200,6 @@ const URL = "https://lostandfound-backend-mrbb.onrender.com"
       alert("kindly fill the data properly every feild");
     }
 
-    this.reset();
 
   };
 

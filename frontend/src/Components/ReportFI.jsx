@@ -186,7 +186,6 @@ function ReportFI() {
       alert("Error Occurred");
     }
 
-    this.reset();
 
   };
 

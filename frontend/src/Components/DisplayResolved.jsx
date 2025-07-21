@@ -16,6 +16,7 @@ function DisplayResolved() {
 
 
 const URL = "https://lostandfound-backend-mrbb.onrender.com"
+// const URL = "http://localhost:9780"
 
   const navigate = useNavigate();
 
@@ -44,8 +45,6 @@ const handlenotificationButtonClick = ()=>{
 
 
   //End Geting all items
-
-
 
   const litem = () => {
     setfileterItem('lost');

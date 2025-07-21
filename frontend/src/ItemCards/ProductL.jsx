@@ -40,7 +40,7 @@ const StyledWrapper = styled.div`
 // End dialogebox styel
 
 
-function ProductL({ name, messages = 'No Specific Message is Given by the Owner of Item', description = 'No Items Description received from the owner', phoneNumber, imageUrl, OwnerName, userTrack, id }) {
+function ProductL({ name, message = 'No Specific Message is Given by the Owner of Item', description = 'No Items Description received from the owner', phoneNumber, imageUrl, OwnerName, userTrack, id }) {
 
 const URL = "https://lostandfound-backend-mrbb.onrender.com"
 
@@ -217,7 +217,7 @@ const URL = "https://lostandfound-backend-mrbb.onrender.com"
           {description}
         </p>
         <h6 className="mt-3 text-white">
-          {messages}
+          {message}
         </h6>
       </div>
       <div className="mt-auto flex border-t  border-gray-200 divide-x divide-gray-200 dark:border-neutral-700 dark:divide-neutral-700">
