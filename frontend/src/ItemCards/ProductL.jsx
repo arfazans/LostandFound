@@ -175,7 +175,7 @@ const URL = "https://lostandfound-backend-mrbb.onrender.com"
                   className="input"
                   name="text"
                   type="text"
-                  maxLength={12122}
+                  maxLength={121}
                   value={resolvemessage}
                   onChange={(e) => setresolvemessage(e.target.value)}
                 />

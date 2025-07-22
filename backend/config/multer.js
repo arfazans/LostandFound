@@ -3,6 +3,8 @@ const path = require('path');
 const fs = require('fs');
 
 // Define storage location
+
+//its not working in the deployed environment 
 // const storage = multer.diskStorage({
 //     destination: function (req, file, cb) {
 //         cb(null, path.join(__dirname, '../uploads'));
