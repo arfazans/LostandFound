@@ -99,8 +99,12 @@ const discardResolvingItem = async (req, res) => {
     try {
         const notificationId = req.body.id;
         const result = await ResolvingItems.findByIdAndDelete(notificationId);
+<<<<<<< HEAD
         console.log(result);
 
+=======
+        console.log(result)
+>>>>>>> d5e676db8dbeebd09d13116d159c9874e35accb1
         res.send("Notification deleted successfully");
     } catch (error) {
         res.status(500).send("Error finding Notification ");
