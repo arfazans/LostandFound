@@ -110,13 +110,19 @@ const discardResolvingItem = async (req, res) => {
 const creatediscardedResolution = async (req, res) => {
     try {
         const { resolverusername, resolvingusername, itemid , resolvingemail,resolveremail,type} = req.body;
-        console.log(itemid);
+    console.log('Received request to create discarded resolution');
 
         const response = await Itemmodel.findById(itemid);
-        console.log("item mila" , response);
+         console.log('Item found:', response);
+
+    if (!response) {
+      console.log('Item not found');
+      return res.status(404).send({ error: 'Item not found' });
+    }
 
         const itemname = response.name;
-        console.log("itemname mila" , itemname);
+ console.log('Item name:', itemname);
+
 
         const Data = new DiscardedResolution({
             resolverUsername: resolverusername,
@@ -130,10 +136,12 @@ const creatediscardedResolution = async (req, res) => {
 
 
         await Data.save();
+            console.log('Discarded resolution saved');
+
         res.send("discarded Resolution save");
 
     } catch (error) {
-        console.log(error);
+    console.log('Error creating discarded resolution:', error);
 
         res.status(500).send({ errormessage: 'Error In Sumbitting discarded resolution' });
 
