@@ -66,6 +66,7 @@ function ProductL({ name, message = 'No Specific Message is Given by the Owner o
 
       if (res.data.exists) {
         alert("You have already submitted a resolution for this item. Please wait for acknowledgement.");
+        return;
       }
 
 
