@@ -82,10 +82,11 @@ console.log(res);
       console.error(error);
     }
 
+console.log("Reached after first try-catch block");
 
     try {
       console.log("yaha aarha hai");
-      
+
       const resolverusername = localStorage.getItem("username");
       const resolvingusername = resolvingUsername;
       const itemid = itemId;
