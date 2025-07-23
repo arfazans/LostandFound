@@ -99,12 +99,6 @@ const discardResolvingItem = async (req, res) => {
     try {
         const notificationId = req.body.id;
         const result = await ResolvingItems.findByIdAndDelete(notificationId);
-<<<<<<< HEAD
-        console.log(result);
-
-=======
-        console.log(result)
->>>>>>> d5e676db8dbeebd09d13116d159c9874e35accb1
         res.send("Notification deleted successfully");
     } catch (error) {
         res.status(500).send("Error finding Notification ");
@@ -132,7 +126,7 @@ const creatediscardedResolution = async (req, res) => {
             resolverEmail:resolveremail,
             type:type
         })
-      
+
 
 
         await Data.save();
@@ -174,10 +168,7 @@ const deletediscardResolutionMessage = async(req,res)=>{
 const checkalreadyresolutionsend = async (req, res) => {
   try {
     const { itemId, resolvingEmail, resolverEmail } = req.query;
-// console.log("backend reseaved above");
-// console.log("itemid = " , itemId);
-// console.log("resolvingemail = " ,resolvingEmail);
-// console.log("resolveremail = " , resolverEmail);
+
     const existingResolution = await ResolvingItems.findOne({
       itemId,
       resolvingEmail,
