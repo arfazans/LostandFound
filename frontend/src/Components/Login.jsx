@@ -221,7 +221,7 @@ const URL = "https://lostandfound-backend-mrbb.onrender.com"
                                                 value={formData.email}
                                                 onChange={handleChange}
 
-                                                className="  py-2.5 sm:py-3 px-4 block w-full  rounded-lg sm:text-sm bg-gray-50 border border-gray-300 text-gray-900 dark:bg-neutral-800 dark:border-neutral-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500  disabled:opacity-50 disabled:pointer-events-none   " required aria-describedby="email-error" />
+                                                className="  py-2.5  px-4 block w-full  rounded-lg sm:text-sm bg-gray-50 border border-gray-300 text-gray-900 dark:bg-neutral-800 dark:border-neutral-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500  disabled:opacity-50 disabled:pointer-events-none   " required aria-describedby="email-error" />
 
                                         </div>
 
