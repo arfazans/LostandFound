@@ -64,10 +64,10 @@ const createResolvingItem = async (req, res) => {
 const resolutionMessageMarkRead = async (req, res) => {
     try {
         const resolverEmail = req.body.userEmail;
-        console.log(resolverEmail);
+        // console.log(resolverEmail);
 
         const result = await ResolvingItems.updateMany({ resolverEmail: resolverEmail }, { $set: { read: true } });
-        console.log(result);
+        // console.log(result);
 
         res.json(result);
     } catch (error) {
@@ -79,10 +79,10 @@ const resolutionMessageMarkRead = async (req, res) => {
 const generalMessageMarkRead = async (req, res) => {
     try {
         const resolvingEmail = req.body.userEmail;
-        console.log(resolvingEmail);
+        // console.log(resolvingEmail);
 
         const result = await DiscardedResolution.updateMany({ resolvingEmail: resolvingEmail }, { $set: { read: true } });
-        console.log(result);
+        // console.log(result);
 
         res.json(result);
     } catch (error) {
@@ -99,6 +99,7 @@ const discardResolvingItem = async (req, res) => {
     try {
         const notificationId = req.body.id;
         const result = await ResolvingItems.findByIdAndDelete(notificationId);
+        console.log(result)
         res.send("Notification deleted successfully");
     } catch (error) {
         res.status(500).send("Error finding Notification ");
