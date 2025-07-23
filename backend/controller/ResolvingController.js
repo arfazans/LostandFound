@@ -64,10 +64,10 @@ const createResolvingItem = async (req, res) => {
 const resolutionMessageMarkRead = async (req, res) => {
     try {
         const resolverEmail = req.body.userEmail;
-        console.log(resolverEmail);
+        // console.log(resolverEmail);
 
         const result = await ResolvingItems.updateMany({ resolverEmail: resolverEmail }, { $set: { read: true } });
-        console.log(result);
+        // console.log(result);
 
         res.json(result);
     } catch (error) {
@@ -79,10 +79,10 @@ const resolutionMessageMarkRead = async (req, res) => {
 const generalMessageMarkRead = async (req, res) => {
     try {
         const resolvingEmail = req.body.userEmail;
-        console.log(resolvingEmail);
+        // console.log(resolvingEmail);
 
         const result = await DiscardedResolution.updateMany({ resolvingEmail: resolvingEmail }, { $set: { read: true } });
-        console.log(result);
+        // console.log(result);
 
         res.json(result);
     } catch (error) {
@@ -99,6 +99,8 @@ const discardResolvingItem = async (req, res) => {
     try {
         const notificationId = req.body.id;
         const result = await ResolvingItems.findByIdAndDelete(notificationId);
+        console.log(result);
+
         res.send("Notification deleted successfully");
     } catch (error) {
         res.status(500).send("Error finding Notification ");
@@ -113,10 +115,10 @@ const creatediscardedResolution = async (req, res) => {
         console.log(itemid);
 
         const response = await Itemmodel.findById(itemid);
-        console.log(response);
+        console.log("item mila" , response);
 
         const itemname = response.name;
-        console.log(itemname);
+        console.log("itemname mila" , itemname);
 
         const Data = new DiscardedResolution({
             resolverUsername: resolverusername,
@@ -126,7 +128,7 @@ const creatediscardedResolution = async (req, res) => {
             resolverEmail:resolveremail,
             type:type
         })
-        console.log(Data,'ye hai problem');
+      
 
 
         await Data.save();
@@ -168,14 +170,10 @@ const deletediscardResolutionMessage = async(req,res)=>{
 const checkalreadyresolutionsend = async (req, res) => {
   try {
     const { itemId, resolvingEmail, resolverEmail } = req.query;
-console.log("backend reseaved above");
-console.log("itemid = " , itemId);
-console.log("resolvingemail = " ,resolvingEmail);
-console.log("resolveremail = " , resolverEmail);
-
-
-
-
+// console.log("backend reseaved above");
+// console.log("itemid = " , itemId);
+// console.log("resolvingemail = " ,resolvingEmail);
+// console.log("resolveremail = " , resolverEmail);
     const existingResolution = await ResolvingItems.findOne({
       itemId,
       resolvingEmail,

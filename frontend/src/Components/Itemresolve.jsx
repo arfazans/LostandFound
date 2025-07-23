@@ -92,7 +92,7 @@ console.log(res);
             const type = "dontallow";
 
       const res = await axios.post(`${URL}/creatediscardedResolution`, { resolverusername, resolvingusername, itemid,resolvingemail,resolveremail,type });
-
+      console.log("kya hua create karne ke baad",res);
 
     } catch (error) {
       console.log(error);
