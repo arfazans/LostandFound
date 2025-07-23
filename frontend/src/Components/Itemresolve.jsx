@@ -8,7 +8,7 @@ import { useContext } from 'react';
 
 const Itemresolve = ({ message = "no message is given", resolvingUsername = "Unknown", myphoto, itemId, resolvingEmail, resolverEmail, id, getItem }) => {
 
-const URL = "https://lostandfound-backend-mrbb.onrender.com"
+  const URL = "https://lostandfound-backend-mrbb.onrender.com"
 
 
   const { getData } = useContext(Notecontext);
@@ -25,17 +25,17 @@ const URL = "https://lostandfound-backend-mrbb.onrender.com"
 
   const movetodocument = async () => {
 
-     try {
+    try {
       const resolverusername = localStorage.getItem("username");
       const resolvingusername = resolvingUsername;
       const itemid = itemId;
       const resolvingemail = resolvingEmail;
       const resolveremail = resolverEmail;
-            const type = "allow";
+      const type = "allow";
 
-      const res = await axios.post(`${URL}/resolving/creatediscardedResolution`, { resolverusername, resolvingusername, itemid,resolvingemail,resolveremail,type });
+      const res = await axios.post(`${URL}/resolving/creatediscardedResolution`, { resolverusername, resolvingusername, itemid, resolvingemail, resolveremail, type });
 
-console.log(res);
+      console.log(res);
 
     } catch (error) {
       console.log(error);
@@ -68,6 +68,23 @@ console.log(res);
   }
 
   const DontAllow = async () => {
+    try {
+      console.log("yaha aarha hai");
+
+      const resolverusername = localStorage.getItem("username");
+      const resolvingusername = resolvingUsername;
+      const itemid = itemId;
+      const resolvingemail = resolvingEmail;
+      const resolveremail = resolverEmail;
+      const type = "dontallow";
+
+      const res = await axios.post(`${URL}/creatediscardedResolution`, { resolverusername, resolvingusername, itemid, resolvingemail, resolveremail, type });
+      console.log("kya hua create karne ke baad", res);
+
+    } catch (error) {
+      console.log(error);
+
+    }
 
     try {
 
@@ -82,25 +99,7 @@ console.log(res);
       console.error(error);
     }
 
-console.log("Reached after first try-catch block");
 
-    try {
-      console.log("yaha aarha hai");
-
-      const resolverusername = localStorage.getItem("username");
-      const resolvingusername = resolvingUsername;
-      const itemid = itemId;
-      const resolvingemail = resolvingEmail;
-      const resolveremail = resolverEmail;
-            const type = "dontallow";
-
-      const res = await axios.post(`${URL}/creatediscardedResolution`, { resolverusername, resolvingusername, itemid,resolvingemail,resolveremail,type });
-      console.log("kya hua create karne ke baad",res);
-
-    } catch (error) {
-      console.log(error);
-
-    }
   }
 
 

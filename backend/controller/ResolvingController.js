@@ -168,7 +168,10 @@ const deletediscardResolutionMessage = async(req,res)=>{
 const checkalreadyresolutionsend = async (req, res) => {
   try {
     const { itemId, resolvingEmail, resolverEmail } = req.query;
-
+// console.log("backend reseaved above");
+// console.log("itemid = " , itemId);
+// console.log("resolvingemail = " ,resolvingEmail);
+// console.log("resolveremail = " , resolverEmail);
     const existingResolution = await ResolvingItems.findOne({
       itemId,
       resolvingEmail,
