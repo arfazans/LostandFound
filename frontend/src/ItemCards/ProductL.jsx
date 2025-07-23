@@ -42,95 +42,110 @@ const StyledWrapper = styled.div`
 
 function ProductL({ name, message = 'No Specific Message is Given by the Owner of Item', description = 'No Items Description received from the owner', phoneNumber, imageUrl, OwnerName, userTrack, id }) {
 
-const URL = "https://lostandfound-backend-mrbb.onrender.com"
+  const URL = "https://lostandfound-backend-mrbb.onrender.com"
 
 
 
   const [showOwner, setshowOwner] = useState(false);
   const [showDialogueBox, setshowDialogueBox] = useState(false);
   const [resolvemessage, setresolvemessage] = useState('');
-
-
-
   const sendingResolveMessage = async (e) => {
     e.preventDefault();
-
     const resolvingEmail = localStorage.getItem('email');
+    const itemId = id;
+    const resolverEmail = userTrack.replace('insertedBy', '');
     try {
-      const res = await axios.get(`${URL}/user/getUsername?email=${resolvingEmail}`);
 
-      const myphoto = localStorage.getItem('Image');
-      const resolvingusername = res.data;
-      const itemId = id;
-      const message = resolvemessage;
-      const resolverEmail = userTrack.replace('insertedBy', '');
+      const res = await axios.get(`${URL}/resolving/checkalreadyresolutionsend`, {
+        params: {
+          itemId,
+          resolvingEmail,
+          resolverEmail
+        }
+      });
 
-
-
-
-      const formData = new FormData();
-      formData.append('itemId', itemId);
-      formData.append('message', message);
-      formData.append('resolvingEmail', resolvingEmail);
-      formData.append('resolvingusername', resolvingusername);
-      formData.append('resolverEmail', resolverEmail);
-      if (myphoto) {
-        formData.append('myphoto', myphoto);
+      if (res.data.exists) {
+        alert("You have already submitted a resolution for this item. Please wait for acknowledgement.");
       }
+
 
       try {
-        const res = await axios.post(`${URL}/resolving/createResolvingItem`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-        console.log(res);
-        console.log('Resolution Submitted Successfully');
-        alert("Resolution Submitted Successfully");
-      } catch (err) {
-        console.log(err, 'Error Submitting Resolution');
-        alert("Error Submitting Resolution");
+        const res = await axios.get(`${URL}/user/getUsername?email=${resolvingEmail}`);
+
+        const myphoto = localStorage.getItem('Image');
+        const resolvingusername = res.data;
+        const message = resolvemessage;
+
+        const formData = new FormData();
+        formData.append('itemId', itemId);
+        formData.append('message', message);
+        formData.append('resolvingEmail', resolvingEmail);
+        formData.append('resolvingusername', resolvingusername);
+        formData.append('resolverEmail', resolverEmail);
+        if (myphoto) {
+          formData.append('myphoto', myphoto);
+        }
+        try {
+          const res = await axios.post(`${URL}/resolving/createResolvingItem`, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+          console.log(res);
+          console.log('Resolution Submitted Successfully');
+          alert("Resolution Submitted Successfully");
+        } catch (err) {
+          console.log(err, 'Error Submitting Resolution');
+          alert("Error Submitting Resolution");
+        }
+        setresolvemessage(''); // Reset the textarea value
+      }
+      catch (err) {
+        console.log(err, 'Error fetching username');
+        alert("Error fetching username");
+      }
+
+    }
+    catch (err) {
+      console.log(err);
+      alert("Error checking resolution status");
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+  const sendResolveMessage = async () => {
+    const resolvingEmail = localStorage.getItem('email');
+    const itemId = id;
+    const resolverEmail = userTrack.replace('insertedBy', '');
+
+    try {
+      const res = await axios.get(`${URL}/resolving/checkalreadyresolutionsend`, {
+        params: {
+          itemId,
+          resolvingEmail,
+          resolverEmail
+        }
+      });
+
+      if (res.data.exists) {
+        alert("You have already submitted a resolution for this item. Please wait for acknowledgement.");
+      } else {
+        setshowDialogueBox(true);
       }
     } catch (err) {
-      console.log(err, 'Error fetching username');
-      alert("Error fetching username");
+      console.log(err);
+      alert("Error checking resolution status");
     }
-
-    setresolvemessage(''); // Reset the textarea value
-    setshowDialogueBox(false);
   }
-
-
-
-
-
-
-
-
-   const sendResolveMessage = async() => {
-    const resolvingEmail = localStorage.getItem('email');
-  const itemId = id;
-  const resolverEmail = userTrack.replace('insertedBy', '');
-
-  try {
-    const res = await axios.get(`${URL}/resolving/checkalreadyresolutionsend`, {
-      params: {
-        itemId,
-        resolvingEmail,
-        resolverEmail
-      }
-    });
-
-    if (res.data.exists) {
-      alert("You have already submitted a resolution for this item. Please wait for acknowledgement.");
-    } else {
-      setshowDialogueBox(true);
-    }
-  } catch (err) {
-    console.log(err);
-    alert("Error checking resolution status");
-  }
-}
 
 
   return (
