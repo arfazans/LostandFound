@@ -97,6 +97,7 @@ const URL = "https://lostandfound-backend-mrbb.onrender.com"
     }
 
     setresolvemessage(''); // Reset the textarea value
+    setshowDialogueBox(false);
   }
 
 
