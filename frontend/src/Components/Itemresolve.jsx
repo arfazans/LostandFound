@@ -73,12 +73,12 @@ const Itemresolve = ({ message = "no message is given", resolvingUsername = "Unk
 
       const resolverusername = localStorage.getItem("username");
       const resolvingusername = resolvingUsername;
-      const itemid = itemId;
+      const itemid = itemId;``
       const resolvingemail = resolvingEmail;
       const resolveremail = resolverEmail;
       const type = "dontallow";
 
-      const res = await axios.post(`${URL}/creatediscardedResolution`, { resolverusername, resolvingusername, itemid, resolvingemail, resolveremail, type });
+      const res = await axios.post(`${URL}/resolving/creatediscardedResolution`, { resolverusername, resolvingusername, itemid, resolvingemail, resolveremail, type });
       console.log("kya hua create karne ke baad", res);
 
     } catch (error) {
