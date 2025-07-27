@@ -11,12 +11,11 @@ const path = require('path');
 const server = express();
 server.use(cors());
 server.use(express.json());
-server.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // to increse the express.js req body size
 const bodyParser = require('body-parser');
-server.use(bodyParser.json({ limit: '100mb' }));
-server.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
+server.use(bodyParser.json({ limit: '10mb' }));
+server.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 //End ->  to increse the express.js req body size
 
 server.use('/products', ItemRoute)
