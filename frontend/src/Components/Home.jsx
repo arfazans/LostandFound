@@ -340,8 +340,8 @@ const handlenotificationButtonClick = ()=>{
                   }
                 })
                 .map((product) => {
-                  // Construct the image URL
-                  const imageUrl = `${URL}/${product.images}`;
+                  const imageUrl = product.image;
+
                   // console.log(imageUrl);
 
 

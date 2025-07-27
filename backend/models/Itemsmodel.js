@@ -10,7 +10,7 @@ const itemsSchema = new mongoose.Schema({
     location: String,
     description: String,
     phoneNumber: { type: String, match: [/^\d{10}$/, 'Please enter a valid 10-digit phone number'], required: true },
-    images: String,
+    image: String,
     type: String,
     message: String,
     userTrack: String

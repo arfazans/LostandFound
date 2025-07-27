@@ -1,8 +1,12 @@
 const Itemmodel = require('../models/Itemsmodel')
+const cloudinary = require('../config/cloudinary')
+const streamifier = require('streamifier');
+
+
 
 // bussinesss logic
 
-const getAllProducts =  async (req, res) => {
+const getAllProducts = async (req, res) => {
     try {
 
         const product = await Itemmodel.find();
@@ -18,28 +22,44 @@ const getAllProducts =  async (req, res) => {
 
 
 const reportProduct = async (req, res) => {
-    try {
+  try {
+    const file = req.file;
 
-
-        const imagePath = req.file ? `uploads/${req.file.filename}` : ''; // store relative path
-
-
-        const item = new Itemmodel({
-            ...req.body,
-            images: imagePath, // store image path in DB
-            // emailVerificationToken: Math.random().toString(36).substr(2, 10), // generate verification token
-
-
-        });
-
-        await item.save();
-
-        res.status(201).send({ success: true, item }); // send success response
-    } catch (err) {
-        console.error('Error saving item:', err);
-        res.status(500).send({ success: false, message: 'Server error' });
+    if (!file) {
+      return res.status(400).json({ success: false, message: 'No image file provided' });
     }
-}
+
+    const streamUpload = (buffer) => {
+      return new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          { resource_type: 'image' },
+          (error, result) => {
+            if (result) {
+              resolve(result);
+            } else {
+              reject(error);
+            }
+          }
+        );
+        streamifier.createReadStream(buffer).pipe(stream);
+      });
+    };
+
+    const result = await streamUpload(file.buffer);
+
+    const item = new Itemmodel({
+      ...req.body,
+      image: result.secure_url,
+    });
+
+    await item.save();
+
+    res.status(201).json({ success: true, item });
+  } catch (err) {
+    console.error('Error saving item:', err);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+};
 
 
-module.exports = {getAllProducts,reportProduct}
+module.exports = { getAllProducts, reportProduct }
