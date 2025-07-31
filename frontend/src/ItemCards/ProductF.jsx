@@ -164,7 +164,7 @@ function ProductF({ name, location, description = "Not any item description reci
 
 
           {
-            localStorage.getItem('email') && (
+            !localStorage.getItem('email') && (
               !userTrack.includes(localStorage.getItem('email')) && (
                 <button type='button' onClick={sendResolveMessage} className=' transition-transform duration-300 hover:scale-110 mt-1 text-black cursor-pointer bg-rose-600 rounded-2xl p-1.5 font-bold '>
                   Resolve
