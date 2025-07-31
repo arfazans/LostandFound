@@ -509,12 +509,12 @@ const URL = "https://lostandfound-backend-mrbb.onrender.com"
       </div>
       <hr className='mt-8' />
       {/* Cards */}
-      <div className="card w-full h-max dark:bg-neutral-800 text-white">
+     <div className="card w-full h-max dark:bg-neutral-800 text-white">
 
 
-        <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+        <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto relative">
           {/* <!-- Grid --> */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
             {
               loading ? (
