@@ -45,7 +45,7 @@ const StyledWrapper = styled.div`
 function ProductF({ name, location, description = "Not any item description recieved from founder of the item", phoneNumber, imageUrl, founderName, id, userTrack }) {
 
 
-const URL = "https://lostandfound-backend-mrbb.onrender.com"
+  const URL = "https://lostandfound-backend-mrbb.onrender.com"
 
 
   const [showFounder, setshowFounder] = useState(false);
@@ -109,37 +109,35 @@ const URL = "https://lostandfound-backend-mrbb.onrender.com"
 
 
 
-  const sendResolveMessage = async() => {
-    if (!localStorage.getItem('email')) {
-      alert("Login First")
-    }
+  const sendResolveMessage = async () => {
+
     const resolvingEmail = localStorage.getItem('email');
-  const itemId = id;
-  const resolverEmail = userTrack.replace('insertedBy', '');
-  console.log('resolver is = ' , resolverEmail);
-  console.log('resolving is = ' , resolvingEmail);
-  console.log("itemid is = ", itemId);
+    const itemId = id;
+    const resolverEmail = userTrack.replace('insertedBy', '');
+    console.log('resolver is = ', resolverEmail);
+    console.log('resolving is = ', resolvingEmail);
+    console.log("itemid is = ", itemId);
 
 
-  try {
-    const res = await axios.get(`${URL}/resolving/checkalreadyresolutionsend`, {
-      params: {
-        itemId,
-        resolvingEmail,
-        resolverEmail
+    try {
+      const res = await axios.get(`${URL}/resolving/checkalreadyresolutionsend`, {
+        params: {
+          itemId,
+          resolvingEmail,
+          resolverEmail
+        }
+      });
+
+      if (res.data.exists) {
+        alert("You have already submitted a resolution for this item. Please wait for acknowledgement.");
+      } else {
+        setshowDialogueBox(true);
       }
-    });
-
-    if (res.data.exists) {
-      alert("You have already submitted a resolution for this item. Please wait for acknowledgement.");
-    } else {
-      setshowDialogueBox(true);
+    } catch (err) {
+      console.log(err);
+      alert("Error checking resolution status");
     }
-  } catch (err) {
-    console.log(err);
-    alert("Error checking resolution status");
   }
-}
 
 
   return (
@@ -166,10 +164,12 @@ const URL = "https://lostandfound-backend-mrbb.onrender.com"
 
 
           {
-            !userTrack.includes(localStorage.getItem('email')) && (
-              <button type='button' onClick={sendResolveMessage} className=' transition-transform duration-300 hover:scale-110 mt-1 text-black cursor-pointer bg-rose-600 rounded-2xl p-1.5 font-bold '>
-                Resolve
-              </button>
+            localStorage.getItem('email') && (
+              !userTrack.includes(localStorage.getItem('email')) && (
+                <button type='button' onClick={sendResolveMessage} className=' transition-transform duration-300 hover:scale-110 mt-1 text-black cursor-pointer bg-rose-600 rounded-2xl p-1.5 font-bold '>
+                  Resolve
+                </button>
+              )
             )
           }
         </div>
