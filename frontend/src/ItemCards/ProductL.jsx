@@ -124,6 +124,10 @@ function ProductL({ name, message = 'No Specific Message is Given by the Owner o
 
 
   const sendResolveMessage = async () => {
+     if (!localStorage.getItem('email')) {
+      alert("Please, Login First")
+    }
+    else {
     const resolvingEmail = localStorage.getItem('email');
     const itemId = id;
     const resolverEmail = userTrack.replace('insertedBy', '');
@@ -147,6 +151,7 @@ function ProductL({ name, message = 'No Specific Message is Given by the Owner o
       alert("Error checking resolution status");
     }
   }
+}
 
 
   return (

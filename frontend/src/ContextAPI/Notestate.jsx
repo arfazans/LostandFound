@@ -9,6 +9,8 @@ const Notecontext = createContext();
 
 const Notestate = ({ children }) => {
   const [products, setproducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+
 
 
 
@@ -22,6 +24,9 @@ const Notestate = ({ children }) => {
       // console.log(products);
     } catch (error) {
       console.error("Error fetching products:", error);
+    }
+    finally{
+      setLoading(false)
     }
   }
 
@@ -48,7 +53,7 @@ const logedOut = ()=>{
 
 
   return (
-    <Notecontext.Provider value={{logedIn,logedOut,products,getData }}>
+    <Notecontext.Provider value={{logedIn,logedOut,products,getData,loading }}>
       {children}
     </Notecontext.Provider>
   );

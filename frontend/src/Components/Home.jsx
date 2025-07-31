@@ -12,27 +12,22 @@ import useNotification from '../CustomHook/useNotification';
 import { useNavigate } from 'react-router-dom'
 
 function Home() {
-const URL = "https://lostandfound-backend-mrbb.onrender.com"
+  const URL = "https://lostandfound-backend-mrbb.onrender.com"
 
 
   const [showMobileSearch, setShowMobileSearch] = useState(false);
-  const {getData, products} = useContext(Notecontext);
+  const { getData, products, loading } = useContext(Notecontext);
   const [filterItem, setfileterItem] = useState('all');
   const [searchkey, setsearchkey] = useState("");
   const [isSearchMode, setIsSearchMode] = useState(false);
-
   const navigate = useNavigate();
+  const { unreadCount, newNotificationReceived, handleGeneralNotificationClick } = useNotification(notificationSound);
 
-
-    const { unreadCount, newNotificationReceived, handleGeneralNotificationClick } = useNotification(notificationSound);
-
-
-
-const handlenotificationButtonClick = ()=>{
-  // handleNotificationClick();
-  navigate('/notificaiton')
-  handleGeneralNotificationClick();
-}
+  const handlenotificationButtonClick = () => {
+    // handleNotificationClick();
+    navigate('/notificaiton')
+    handleGeneralNotificationClick();
+  }
 
 
 
@@ -177,8 +172,6 @@ const handlenotificationButtonClick = ()=>{
       `}</style>
               <span className="sr-only">Notifications</span>
             </button>
-
-
             {/* <!-- Dropdown --> */}
             <div className="transition-transform duration-300 hover:scale-110 ml-2  hs-dropdown [--placement:bottom-right] relative inline-flex">
               <NavLink to={'/profile'} id="hs-dropdown-account" type="button" className="size-9.5 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none dark:text-black" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
@@ -186,7 +179,6 @@ const handlenotificationButtonClick = ()=>{
               </NavLink>
             </div>
             {/* <!--End Dropdown --> */}
-
           </div>
         </nav >
       </header >
@@ -202,7 +194,7 @@ const handlenotificationButtonClick = ()=>{
             <div id="hs-secondaru-navbar" className="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow md:block" aria-labelledby="hs-secondaru-navbar-collapse">
               <div className="overflow-hidden overflow-y-hidden max-h-[75vh] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
                 <div className="py-2 md:py-0 flex flex-col md:flex-row md:items-center gap-y-0.5 md:gap-y-0 md:gap-x-6">
-                  <NavLink className="   py-2 md:py-0 flex items-center font-medium text-sm text-red-600 focus:outline-hidden focus:text-red-600 dark:text-red-500 dark:focus:text-red-500" aria-current="page"
+                  <NavLink className="px-2   py-2 md:py-0 flex items-center font-medium text-sm text-red-600 focus:outline-hidden focus:text-red-600 dark:text-red-500 dark:focus:text-red-500" aria-current="page"
 
                     to={'/'}
                   >
@@ -265,8 +257,6 @@ const handlenotificationButtonClick = ()=>{
     focus:outline-hidden
    ${isActive ? "dark:text-blue-500 dark:focus:text-blue-500" : "text-white"}`
                     }
-
-
                     to={'/reportfi'}
                   >
                     <svg className="shrink-0 size-4 me-3 md:me-2 block md:hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 12h.01" /><path d="M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" /><path d="M22 13a18.15 18.15 0 0 1-20 0" /><rect width="20" height="14" x="2" y="6" rx="2" /></svg>
@@ -330,33 +320,36 @@ const handlenotificationButtonClick = ()=>{
           {/* <!-- Grid --> */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {
-              products.length > 0?(
-              products
-                .filter(product => {
-                  if (isSearchMode) {
-                    return product.name.toLowerCase().includes(searchkey.toLowerCase());
-                  } else {
-                    return filterItem === 'all' || product.type === filterItem;
-                  }
-                })
-                .map((product) => {
-                  const imageUrl = product.image;
+              loading ? (
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-amber-600  text-center">Loading...</div>
+              ) : (
 
-                  // console.log(imageUrl);
+                products.length > 0 ? (
+                  products
+                    .filter(product => {
+                      if (isSearchMode) {
+                        return product.name.toLowerCase().includes(searchkey.toLowerCase());
+                      } else {
+                        return filterItem === 'all' || product.type === filterItem;
+                      }
+                    })
+                    .map((product) => {
+                      const imageUrl = product.image;
+                      // console.log(imageUrl);
 
-
-                  if (product.type === 'lost') {
-                    return (
-                      <ProductL key={product._id} id={product._id}  {...product} imageUrl={imageUrl} />
-                    )
-                  } else if (product.type === 'found') {
-                    return (
-                      <ProductF key={product._id} id={product._id} {...product} imageUrl={imageUrl} />
-                    )
-                  }
-                })
-              ):(
-                   <div className="absolute top-full left-1/2 -translate-x-1/2 -translate-y-1/2 text-amber-600 text-center">No Data found</div>
+                      if (product.type === 'lost') {
+                        return (
+                          <ProductL key={product._id} id={product._id}  {...product} imageUrl={imageUrl} />
+                        )
+                      } else if (product.type === 'found') {
+                        return (
+                          <ProductF key={product._id} id={product._id} {...product} imageUrl={imageUrl} />
+                        )
+                      }
+                    })
+                ) : (
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 -translate-y-1/2 text-amber-600 text-center">No Data found</div>
+                )
               )
             }
 
