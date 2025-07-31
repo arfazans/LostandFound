@@ -531,7 +531,7 @@ const URL = "https://lostandfound-backend-mrbb.onrender.com"
                   }
                 })
                   .map((product) => {
-                    const imageUrl = `${URL}/${product.images}`;
+                    const imageUrl = product.image;
                     if (product.type === 'lost') {
                       return <ProductL key={product._id} {...product} imageUrl={imageUrl} />
                     } else if (product.type === 'found') {
