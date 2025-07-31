@@ -110,6 +110,9 @@ const URL = "https://lostandfound-backend-mrbb.onrender.com"
 
 
   const sendResolveMessage = async() => {
+    if (!localStorage.getItem('email')) {
+      alert("Login First")
+    }
     const resolvingEmail = localStorage.getItem('email');
   const itemId = id;
   const resolverEmail = userTrack.replace('insertedBy', '');
