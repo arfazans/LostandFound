@@ -16,7 +16,11 @@ const server = express();
 // Security middleware
 server.use(helmet());
 server.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: [
+    process.env.FRONTEND_URL,
+    'http://localhost:5173',
+    'https://lostandfound-frontend-y3v6.onrender.com'
+  ].filter(Boolean),
   credentials: true
 }));
 
