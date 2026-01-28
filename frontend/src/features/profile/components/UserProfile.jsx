@@ -3,8 +3,8 @@ import React from 'react'
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import '../Home.css'
-import User_DetailCard from './User_DetailCard';
+import '../../../shared/styles/Home.css'
+import { UserDetailCard } from '.';
 
 
 
@@ -146,7 +146,7 @@ function Profile() {
 
 
   if (localStorage.getItem("email")) {
-    return  <User_DetailCard />
+    return  <UserDetailCard />
   }
   return (
     <>

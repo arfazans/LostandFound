@@ -1,0 +1,64 @@
+/* Container reset to remove those weird outer borders seen in your screenshot */
+.button1 {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  border: 0;
+  vertical-align: middle;
+  background: transparent;
+  padding: 0;
+  margin: 0.5rem;
+}
+
+.button1 .button_lg {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 30px;
+  min-width: 130px; /* Ensures Login and Signup are same width */
+  color: #fff;
+  background: #0f171e; /* Dark navy/black */
+  border-radius: 2px;  /* Sharp corners per screenshot 1 */
+  transition: all 0.3s ease;
+  overflow: hidden;    /* Essential to clip the sliding red layer */
+}
+
+/* The sliding red background */
+.button1 .button_sl {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: #ff4757; /* Bright red */
+  transition: all 0.3s cubic-bezier(0.76, 0, 0.24, 1);
+  z-index: 1;
+}
+
+/* Hover Effect */
+.button1:hover .button_sl {
+  left: 0;
+}
+
+/* Text Styling */
+.button1 .button_text {
+  position: relative;
+  z-index: 2;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Logic for the "SIGNUP" button to be red by default */
+.button1.red .button_lg {
+  background: #ff4757;
+}
+/* Optional: make the red button slide to dark on hover */
+.button1.red .button_sl {
+  background: #0f171e;
+}

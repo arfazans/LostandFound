@@ -1,10 +1,8 @@
-import React, { useState } from 'react'
-import '../product.css'
+import React, { useState, memo } from 'react'
+import '../../../../shared/styles/ItemCards.css'
 import styled from 'styled-components';
 import axios from 'axios';
-
-
-
+import { config } from '../../../../shared';
 
 //dialogebox styel
 
@@ -36,16 +34,12 @@ const StyledWrapper = styled.div`
     color: #000;
   }`;
 
-
 // End dialogebox styel
 
+const FoundItemCard = memo(({ name, location, description = "Not any item description recieved from founder of the item", phoneNumber, imageUrl, founderName, id, userTrack }) => {
 
 
-
-function ProductF({ name, location, description = "Not any item description recieved from founder of the item", phoneNumber, imageUrl, founderName, id, userTrack }) {
-
-
-  const URL = "https://lostandfound-backend-mrbb.onrender.com"
+  const URL = config.API_URL;
 
 
   const [showFounder, setshowFounder] = useState(false);
@@ -254,6 +248,6 @@ function ProductF({ name, location, description = "Not any item description reci
       </div>
     </div>
   )
-}
+});
 
-export default ProductF
+export default FoundItemCard

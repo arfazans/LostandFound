@@ -1,16 +1,13 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
+import './shared/styles/index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Home from './Components/Home.jsx'
-import ReportLI from './Components/ReportLI.jsx'
-import ReportFI from './Components/ReportFI.jsx'
-import Profile from './Components/Profile.jsx'
-import Notestate from './ContextAPI/Notestate.jsx'
-import Signup from './Components/Signup.jsx'
-import Login from './Components/Login.jsx'
-import Notification from './Components/Notification.jsx'
-import DisplayResolved from './Components/DisplayResolved.jsx'
+import { Dashboard } from './features/dashboard'
+import { ReportLostItem, ReportFoundItem, ResolvedItemsList } from './features/items'
+import { UserProfile } from './features/profile'
+import { AppContext } from './shared'
+import { SignupForm, LoginForm } from './features/authentication'
+import { NotificationList } from './features/notifications'
 
 
 
@@ -18,47 +15,41 @@ const router = createBrowserRouter([
 
   {
     path: "",
-    element : <Home/>
+    element : <Dashboard/>
   },
-
-
   {
     path: "/reportfi",
-    element: <ReportFI/>
+    element: <ReportFoundItem/>
   },
   {
     path: "/reportli",
-    element: <ReportLI/>
+    element: <ReportLostItem/>
   },
   {
     path: "/profile",
-    element: <Profile/>
+    element: <UserProfile/>
   },
   {
     path: "/signup",
-    element: <Signup/>
+    element: <SignupForm/>
   },
   {
     path: "/login",
-    element: <Login/>
+    element: <LoginForm/>
   },
   {
     path: "/notificaiton",
-    element: <Notification/>
+    element: <NotificationList/>
   },
   {
     path: "/resolvedItems",
-    element: <DisplayResolved/>
+    element: <ResolvedItemsList/>
   },
 ]);
 
 
-// eslint-disable-next-line no-undef
 createRoot(document.getElementById('root')).render(
-  <Notestate>
-
+  <AppContext>
     <RouterProvider router={router} />
-
-  </Notestate>
-
+  </AppContext>
 )

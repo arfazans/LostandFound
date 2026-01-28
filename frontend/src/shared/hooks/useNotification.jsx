@@ -1,11 +1,9 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
-
-
+import { config } from '../utils/config.js';
 
 const useNotification = (notificationSound) => {
-
-const URL = "https://lostandfound-backend-mrbb.onrender.com"
+  const URL = config.API_URL;
 
 
   const [isMounted, setIsMounted] = useState(false);

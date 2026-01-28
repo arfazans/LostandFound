@@ -1,10 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
+import '../../../../shared/styles/ItemCards.css'
 import styled from 'styled-components';
 import axios from 'axios';
-
-
-
-
+import { config } from '../../../../shared';
 
 //dialogebox styel
 
@@ -36,13 +34,11 @@ const StyledWrapper = styled.div`
       color: #000;
     }`;
 
-
 // End dialogebox styel
 
+const LostItemCard = memo(({ name, message = 'No Specific Message is Given by the Owner of Item', description = 'No Items Description received from the owner', phoneNumber, imageUrl, OwnerName, userTrack, id }) => {
 
-function ProductL({ name, message = 'No Specific Message is Given by the Owner of Item', description = 'No Items Description received from the owner', phoneNumber, imageUrl, OwnerName, userTrack, id }) {
-
-  const URL = "https://lostandfound-backend-mrbb.onrender.com"
+  const URL = config.API_URL;
 
 
 
@@ -258,6 +254,6 @@ function ProductL({ name, message = 'No Specific Message is Given by the Owner o
       </div>
     </div>
   )
-}
+});
 
-export default ProductL
+export default LostItemCard

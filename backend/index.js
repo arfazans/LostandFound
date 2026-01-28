@@ -2,35 +2,50 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const rateLimit = require('express-rate-limit')
+const helmet = require('helmet')
 const ItemRoute = require('./Routes/ItemsRoutes')
 const MovingItemRoute = require('./Routes/MovingItemsRoutes')
 const ResolvingRoute = require('./Routes/ResolvingRoutes')
 const UserRoute = require('./Routes/UserRoutes')
+const errorHandler = require('./middleware/errorHandler')
 const path = require('path');
 
 const server = express();
-server.use(cors());
-server.use(express.json());
 
-// to increse the express.js req body size
-const bodyParser = require('body-parser');
-server.use(bodyParser.json({ limit: '10mb' }));
-server.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
-//End ->  to increse the express.js req body size
+// Security middleware
+server.use(helmet());
+server.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  credentials: true
+}));
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 1000 // Increased limit for development
+});
+server.use(limiter);
+
+server.use(express.json({ limit: '10mb' }));
+server.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 server.use('/products', ItemRoute)
 server.use('/movingitem', MovingItemRoute)
 server.use('/resolving', ResolvingRoute)
 server.use('/user', UserRoute);
 
+// Error handling middleware (must be last)
+server.use(errorHandler);
+
 main().catch(err => console.log(err));
 
 async function main() {
-
     await mongoose.connect(process.env.DATABASE_URL)
-    console.log("DataBase Connect");
+    console.log("Database Connected");
 }
 
-server.listen(process.env.PORT, () => {
-    console.log("server is started");
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });

@@ -2,38 +2,41 @@ const Itemmodel = require('../models/Itemsmodel')
 const cloudinary = require('../config/cloudinary')
 const streamifier = require('streamifier');
 
-
-
-
-// bussinesss logic
-
-const getAllProducts = async (req, res) => {
+const getAllProducts = async (req, res, next) => {
     try {
-
-        const product = await Itemmodel.find();
-        res.json(product);
-        // console.log(product);
-
-    }
-    catch (err) {
-        console.error(err);
-        res.status(500).send("Error fetching data from database");
+        const products = await Itemmodel.find().sort({ _id: -1 });
+        res.json({
+            success: true,
+            count: products.length,
+            data: products
+        });
+    } catch (err) {
+        next(err);
     }
 }
 
-
-const reportProduct = async (req, res) => {
+const reportProduct = async (req, res, next) => {
   try {
     const file = req.file;
 
     if (!file) {
-      return res.status(400).json({ success: false, message: 'No image file provided' });
+      return res.status(400).json({ 
+        success: false, 
+        message: 'No image file provided' 
+      });
     }
 
     const streamUpload = (buffer) => {
       return new Promise((resolve, reject) => {
         const stream = cloudinary.uploader.upload_stream(
-          { resource_type: 'image' },
+          { 
+            resource_type: 'image',
+            folder: 'lost-and-found',
+            transformation: [
+              { width: 800, height: 600, crop: 'limit' },
+              { quality: 'auto' }
+            ]
+          },
           (error, result) => {
             if (result) {
               resolve(result);
@@ -53,14 +56,16 @@ const reportProduct = async (req, res) => {
       image: result.secure_url,
     });
 
-    await item.save();
+    const savedItem = await item.save();
 
-    res.status(201).json({ success: true, item });
+    res.status(201).json({ 
+      success: true, 
+      message: 'Item reported successfully',
+      data: savedItem 
+    });
   } catch (err) {
-    console.error('Error saving item:', err);
-    res.status(500).json({ success: false, message: 'Server error' });
+    next(err);
   }
 };
-
 
 module.exports = { getAllProducts, reportProduct }

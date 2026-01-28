@@ -2,10 +2,10 @@ import React from 'react'
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
-import notificationSound from '../../Assets/new-notification-09-352705.mp3'
-import ResolvedFI from '../ItemCards/ResolvedFI';
-import ResolvedLI from '../ItemCards/ResolvedLI';
-import useNotification from '../CustomHook/useNotification';
+import { useNotification, config } from '../../../shared';
+import notificationSound from '../../../shared/assets/new-notification-09-352705.mp3'
+import { ResolvedFoundItemCard } from './cards';
+import { ResolvedLostItemCard } from './cards';
 
 function DisplayResolved() {
     const [showMobileSearch, setShowMobileSearch] = useState(false);
@@ -15,7 +15,7 @@ function DisplayResolved() {
   const [products, setproducts] = useState([]);
 
 
-const URL = "https://lostandfound-backend-mrbb.onrender.com"
+const URL = config.API_URL;
 // const URL = "http://localhost:9780"
 
   const navigate = useNavigate();
@@ -358,12 +358,12 @@ const handlenotificationButtonClick = ()=>{
 
                   if (product.type === 'lost') {
                     return (
-                      <ResolvedLI key={product._id} id={product._id}  {...product} imageUrl={imageUrl} />
+                      <ResolvedLostItemCard key={product._id} id={product._id}  {...product} imageUrl={imageUrl} />
                     )
 
                   } else if (product.type === 'found') {
                     return (
-                      <ResolvedFI key={product._id} id={product._id} {...product} imageUrl={imageUrl} />
+                      <ResolvedFoundItemCard key={product._id} id={product._id} {...product} imageUrl={imageUrl} />
                     )
                   }
                 })

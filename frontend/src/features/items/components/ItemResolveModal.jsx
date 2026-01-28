@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Notecontext } from '../ContextAPI/Notestate';
+import { Notecontext, config } from '../../../shared';
 import styled from 'styled-components';
 import { useContext } from 'react';
 
@@ -8,7 +8,7 @@ import { useContext } from 'react';
 
 const Itemresolve = ({ message = "no message is given", resolvingUsername = "Unknown", myphoto, itemId, resolvingEmail, resolverEmail, id, getItem }) => {
 
-  const URL = "https://lostandfound-backend-mrbb.onrender.com"
+  const URL = config.API_URL;
 
 
   const { getData } = useContext(Notecontext);

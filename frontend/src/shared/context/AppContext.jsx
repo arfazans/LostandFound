@@ -1,13 +1,14 @@
 import React, { createContext,useState,useEffect  } from "react";
 import axios from "axios";
+import { config } from "../utils/config.js"
+const URL = config.API_URL;
 
-
-const URL = "https://lostandfound-backend-mrbb.onrender.com"
+// const URL = "https://lostandfound-backend-mrbb.onrender.com"
 
 
 const Notecontext = createContext();
 
-const Notestate = ({ children }) => {
+const AppContext = ({ children }) => {
   const [products, setproducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -16,17 +17,22 @@ const Notestate = ({ children }) => {
 
   //Fetching Dashboard Content
   const getData = async () => {
-
+    setLoading(true);
     try {
-
-      const res = await axios.get(`${URL}/products`);
-      setproducts(res.data);
-      // console.log(products);
+      const res = await axios.get(`${URL}/products`, {
+        timeout: 10000,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const data = res.data.data || res.data;
+      setproducts(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Error fetching products:", error);
-    }
-    finally{
-      setLoading(false)
+      setproducts([]);
+      // Remove automatic retry - let user manually refresh if needed
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -60,4 +66,4 @@ const logedOut = ()=>{
 };
 
 export { Notecontext };
-export default Notestate;
+export default AppContext;

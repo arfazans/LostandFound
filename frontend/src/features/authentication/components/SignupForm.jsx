@@ -3,12 +3,12 @@ import React from 'react'
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom'
 import { useContext } from 'react';
-import { Notecontext } from '../ContextAPI/Notestate';
+import { Notecontext, config } from '../../../shared';
 import { useNavigate } from 'react-router-dom';
 
 function Signup() {
 
-const URL = "https://lostandfound-backend-mrbb.onrender.com"
+const URL = config.API_URL;
 
 
   const [data, setdata] = useState({})

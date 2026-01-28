@@ -4,8 +4,8 @@ import { useState, } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import notificationSound from '../../Assets/new-notification-09-352705.mp3'
-import useNotification from '../CustomHook/useNotification';
+import { useNotification, config } from '../../../shared';
+import notificationSound from '../../../shared/assets/new-notification-09-352705.mp3'
 
 
 
@@ -77,7 +77,7 @@ const StyledWrapper = styled.div`
 
 function ReportLI() {
 
-const URL = "https://lostandfound-backend-mrbb.onrender.com"
+const URL = config.API_URL;
 
 
   const [imagePreview, setImagePreview] = useState(null);

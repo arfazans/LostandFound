@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React from 'react';
 import styled from 'styled-components';
+import { config } from '../../../shared';
 
 const GeneralMessages = ({ resolverUsername, resolvingUsername, itemName, id, getItem,type }) => {
 
-const URL = "https://lostandfound-backend-mrbb.onrender.com"
+const URL = config.API_URL;
 
 
   const deleteMessage = async () => {
