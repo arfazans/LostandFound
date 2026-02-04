@@ -13,6 +13,7 @@ const AppState = ({ children }) => {
   const [searchkey, setSearchkey] = useState("");
   const [isSearchMode, setIsSearchMode] = useState(false);
   const [notification, setnotification] = useState(false);
+  const [login, setLogin] = useState(!!localStorage.getItem("email"));
 
   const getData = async () => {
     setLoading(true);
@@ -34,6 +35,7 @@ const AppState = ({ children }) => {
 
   const logedIn = (emailData) => {
     localStorage.setItem("email", emailData);
+    setLogin(true);
   };
 
   const logedOut = () => {
@@ -41,9 +43,11 @@ const AppState = ({ children }) => {
     localStorage.removeItem('Image');
     localStorage.removeItem('username');
     localStorage.removeItem('usernamebeforeedit');
+    setLogin(false);
   };
 
   const value = {
+    login,
     logedIn,
     logedOut,
     products,

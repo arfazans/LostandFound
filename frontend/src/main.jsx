@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Dashboard } from './features/dashboard'
 import { ReportLostItem, ReportFoundItem, ResolvedItemsList } from './features/items'
 import { UserProfile } from './features/profile'
-import { AppContext } from './shared'
+import { AppState } from './shared'
 import { SignupForm, LoginForm } from './features/authentication'
 import { NotificationList } from './features/notifications'
 
@@ -49,7 +49,7 @@ const router = createBrowserRouter([
 
 
 createRoot(document.getElementById('root')).render(
-  <AppContext>
+  <AppState>
     <RouterProvider router={router} />
-  </AppContext>
+  </AppState>
 )
