@@ -1,69 +1,70 @@
-import React, { createContext,useState,useEffect  } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
-import { config } from "../utils/config.js"
+import { config } from "../utils/config.js";
+
 const URL = config.API_URL;
 
-// const URL = "https://lostandfound-backend-mrbb.onrender.com"
+export const AppContext = createContext();
+export const Notecontext = createContext();
 
-
-const Notecontext = createContext();
-
-const AppContext = ({ children }) => {
+const AppState = ({ children }) => {
   const [products, setproducts] = useState([]);
-    const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [searchkey, setSearchkey] = useState("");
+  const [isSearchMode, setIsSearchMode] = useState(false);
+  const [notification, setnotification] = useState(false);
 
-
-
-
-  //Fetching Dashboard Content
   const getData = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`${URL}/products`, {
-        timeout: 10000,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
+      const res = await axios.get(`${URL}/products`);
       const data = res.data.data || res.data;
       setproducts(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Error fetching products:", error);
       setproducts([]);
-      // Remove automatic retry - let user manually refresh if needed
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    getData(); // function to fetch normal item data
+    getData();
   }, []);
-  // End Fetching Dashboard Content
 
+  const logedIn = (emailData) => {
+    localStorage.setItem("email", emailData);
+  };
 
-
-//Loged In Loged Out
-const logedIn = (emailData)=>{
-  localStorage.setItem("email",emailData);
-}
-const logedOut = ()=>{
-   localStorage.removeItem('email');
+  const logedOut = () => {
+    localStorage.removeItem('email');
     localStorage.removeItem('Image');
     localStorage.removeItem('username');
-}
-//End Loged In Loged Out
+    localStorage.removeItem('usernamebeforeedit');
+  };
 
-
-
-
+  const value = {
+    logedIn,
+    logedOut,
+    products,
+    setproducts,
+    getData,
+    loading,
+    searchkey,
+    setSearchkey,
+    isSearchMode,
+    setIsSearchMode,
+    notification,
+    setnotification
+  };
 
   return (
-    <Notecontext.Provider value={{logedIn,logedOut,products,getData,loading }}>
-      {children}
-    </Notecontext.Provider>
+    <AppContext.Provider value={value}>
+      <Notecontext.Provider value={value}>
+        {children}
+      </Notecontext.Provider>
+    </AppContext.Provider>
   );
 };
 
-export { Notecontext };
-export default AppContext;
+export default AppState;

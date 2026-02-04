@@ -1,3 +1,5 @@
-export { default as Button } from './Button.jsx';
-export { default as Modal } from './Modal.jsx';
-export { default as SearchInput } from './SearchInput.jsx';
+export * from './Button';
+export * from './Modal';
+export * from './SearchInput';
+export * from './Layout';
+export * from './FormControls';

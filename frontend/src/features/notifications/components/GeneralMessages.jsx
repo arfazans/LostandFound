@@ -1,98 +1,57 @@
 import axios from 'axios';
 import React from 'react';
-import styled from 'styled-components';
 import { config } from '../../../shared';
 
-const GeneralMessages = ({ resolverUsername, resolvingUsername, itemName, id, getItem,type }) => {
-
-const URL = config.API_URL;
-
+const GeneralMessages = ({ resolverUsername, resolvingUsername, itemName, id, getItem, type }) => {
+  const URL = config.API_URL;
 
   const deleteMessage = async () => {
     try {
-      const messageid = id;
-      const res = await axios.post(`${URL}/resolving/deletediscardResolutionMessage`, { id: messageid })
+      await axios.post(`${URL}/resolving/deletediscardResolutionMessage`, { id });
       getItem();
-      console.log(res);
-      alert("Message Deleted Succesfull")
-
     } catch (error) {
-      console.log(error);
-      alert("Message Not Deleted")
+      console.error("Error deleting message:", error);
     }
-  }
+  };
 
+  const isAccepted = type === "allow";
 
   return (
-    <StyledWrapper>
-
-      {type === "dontallow" ? (
-        <div className="info">
-          <div className="info__icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width={24} viewBox="0 0 24 24" height={24} fill="none"><path fill="#393a37" d="m12 1.5c-5.79844 0-10.5 4.70156-10.5 10.5 0 5.7984 4.70156 10.5 10.5 10.5 5.7984 0 10.5-4.7016 10.5-10.5 0-5.79844-4.7016-10.5-10.5-10.5zm.75 15.5625c0 .1031-.0844.1875-.1875.1875h-1.125c-.1031 0-.1875-.0844-.1875-.1875v-6.375c0-.1031.0844-.1875.1875-.1875h1.125c.1031 0 .1875.0844.1875.1875zm-.75-8.0625c-.2944-.00601-.5747-.12718-.7808-.3375-.206-.21032-.3215-.49305-.3215-.7875s.1155-.57718.3215-.7875c.2061-.21032.4864-.33149.7808-.3375.2944.00601.5747.12718.7808.3375.206.21032.3215.49305.3215.7875s-.1155.57718-.3215.7875c-.2061.21032-.4864.33149-.7808.3375z" /></svg>
-          </div>
-          <div className="info__title">hey, {resolvingUsername} Your resolving acknowledgment about item {itemName} has been Discarded By  {resolverUsername}</div>
-          <div onClick={deleteMessage} className="info__close"><svg height={20} viewBox="0 0 20 20" width={20} xmlns="http://www.w3.org/2000/svg"><path d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z" fill="#393a37" /></svg></div>
-        </div>
-      ) : type === "allow" ? (
-        <div className="info">
-        <div className="info__icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width={24} viewBox="0 0 24 24" height={24} fill="none"><path fill="#393a37" d="m12 1.5c-5.79844 0-10.5 4.70156-10.5 10.5 0 5.7984 4.70156 10.5 10.5 10.5 5.7984 0 10.5-4.7016 10.5-10.5 0-5.79844-4.7016-10.5-10.5-10.5zm.75 15.5625c0 .1031-.0844.1875-.1875.1875h-1.125c-.1031 0-.1875-.0844-.1875-.1875v-6.375c0-.1031.0844-.1875.1875-.1875h1.125c.1031 0 .1875.0844.1875.1875zm-.75-8.0625c-.2944-.00601-.5747-.12718-.7808-.3375-.206-.21032-.3215-.49305-.3215-.7875s.1155-.57718.3215-.7875c.2061-.21032.4864-.33149.7808-.3375.2944.00601.5747.12718.7808.3375.206.21032.3215.49305.3215.7875s-.1155.57718-.3215.7875c-.2061.21032-.4864.33149-.7808.3375z" /></svg>
-        </div>
-        <div className="info__title">hey, {resolvingUsername} Your resolving acknowledgment about item {itemName} has been Accepted By  {resolverUsername}</div>
-        <div onClick={deleteMessage} className="info__close"><svg height={20} viewBox="0 0 20 20" width={20} xmlns="http://www.w3.org/2000/svg"><path d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z" fill="#393a37" /></svg></div>
+    <div className={`p-6 rounded-3xl border transition-all duration-500 shadow-xs hover:shadow-xl flex items-center gap-6 ${isAccepted
+        ? 'bg-emerald-50 border-emerald-100 dark:bg-emerald-950/20 dark:border-emerald-800/30'
+        : 'bg-amber-50 border-amber-100 dark:bg-amber-950/20 dark:border-amber-800/30'
+      }`}>
+      <div className={`shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center ${isAccepted
+          ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20'
+          : 'bg-amber-500 text-white shadow-lg shadow-amber-500/20'
+        }`}>
+        {isAccepted ? (
+          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" /></svg>
+        ) : (
+          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" /></svg>
+        )}
       </div>
-    ):(
-      <div className='text-center'>No Type Specified</div>
-    )
 
-  }
+      <div className="flex-1 space-y-1">
+        <h4 className={`text-lg font-black uppercase tracking-tight ${isAccepted ? 'text-emerald-700 dark:text-emerald-400' : 'text-amber-700 dark:text-amber-400'}`}>
+          Request {isAccepted ? 'Accepted' : 'Discarded'}
+        </h4>
+        <p className="text-gray-600 dark:text-neutral-400 font-medium leading-relaxed">
+          Hey <span className="font-black text-gray-900 dark:text-white">{resolvingUsername}</span>, your resolution request for item{' '}
+          <span className="font-black text-gray-900 dark:text-white underline decoration-2 underline-offset-4 decoration-amber-500/30">"{itemName}"</span> has been{' '}
+          {isAccepted ? 'accepted' : 'discarded'} by <span className="font-black text-gray-900 dark:text-white">{resolverUsername}</span>.
+        </p>
+      </div>
 
-    </StyledWrapper >
+      <button
+        onClick={deleteMessage}
+        className="p-3 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-2xl transition-all active:scale-90"
+        title="Delete message"
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+      </button>
+    </div>
   );
 }
-
-const StyledWrapper = styled.div`
-  .info {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    min-width:full;
-    padding: 1rem;
-    margin-bottom:1.5rem;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: start;
-    background: #509AF8;
-    border-radius: 8px;
-    box-shadow: 0px 0px 5px -3px #111;
-  }
-
-  .info__icon {
-    width: 20px;
-    height: 20px;
-    transform: translateY(-2px);
-    margin-right: 8px;
-  }
-
-  .info__icon path {
-    fill: #fff;
-  }
-
-  .info__title {
-    font-weight: 500;
-    font-size: 14px;
-    color: black;
-  }
-
-  .info__close {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    margin-left: auto;
-  }
-
-  .info__close path {
-    fill: #fff;
-  }`;
 
 export default GeneralMessages;

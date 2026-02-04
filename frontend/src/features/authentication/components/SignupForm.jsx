@@ -1,256 +1,141 @@
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import React from 'react'
-import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom'
-import { useContext } from 'react';
 import { Notecontext, config } from '../../../shared';
-import { useNavigate } from 'react-router-dom';
+import { Layout } from '../../../shared/components/Layout';
+import { FormInput } from '../../../shared/components/FormControls';
 
 function Signup() {
-
-const URL = config.API_URL;
-
-
-  const [data, setdata] = useState({})
-  const { logedIn } = useContext(Notecontext);
+  const URL = config.API_URL;
   const navigate = useNavigate();
+  const { logedIn } = useContext(Notecontext);
 
+  const [data, setData] = useState({
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: '',
+    'confirm-password': ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
-    setdata({ ...data, [e.target.name]: e.target.value });
+    setData({ ...data, [e.target.name]: e.target.value });
   }
 
-
-
-
-  function validatePassword() {
-    const password = document.getElementById("password").value;
-    const confirm = document.getElementById("confirm-password").value;
-
-    if (password !== confirm) {
+  const validatePassword = () => {
+    if (data.password !== data['confirm-password']) {
       alert("Passwords do not match.");
       return false;
     }
-
     return true;
   }
 
-
-
-
-  const handlesubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validatePassword()) {
-      return;
-    }
+    if (!validatePassword()) return;
 
+    setIsSubmitting(true);
     try {
       const response = await axios.post(`${URL}/user/signUp`, data);
-      console.log(response.data);
       logedIn(data.email);
-      alert('Signed up');
-
-       // Access the user data
       const userData = response.data.user;
-      const firstName = userData.firstname;
-      const lastName = userData.lastname;
-
-
-      // Store the user ID in local storage
-      localStorage.setItem('username', firstName+ ' ' +lastName);
-
-
-      // Navigate to the profile page
+      localStorage.setItem('username', `${userData.firstname} ${userData.lastname}`);
       navigate('/profile');
-
-      //reset usestate
-      setdata({});
-
     } catch (error) {
-      console.log(error);
+      console.error("Signup error:", error);
+      alert("Registration failed. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
-
-
-
-
-
-
-
-
-
-
   return (
+    <Layout>
+      <div className="flex flex-col items-center justify-center px-4 py-12 mx-auto min-h-[80vh]">
+        <div className="w-full max-w-2xl bg-white dark:bg-neutral-900 rounded-[3rem] shadow-2xl border border-gray-100 dark:border-neutral-800 overflow-hidden animate-in fade-in slide-in-from-bottom-8 duration-700">
+          <div className="p-10 sm:p-14">
+            <div className="text-center mb-12 space-y-2">
+              <h1 className="text-4xl font-black text-gray-900 dark:text-white uppercase tracking-tight">Join Us</h1>
+              <p className="text-gray-500 dark:text-neutral-400 font-medium">Create your community account</p>
+            </div>
 
-        <div className='dark:bg-neutral-800 min-h-dvh max-h-max  h-screen  overflow-auto box-border'>
+            <form className="grid grid-cols-1 md:grid-cols-2 gap-8" onSubmit={handleSubmit}>
+              <FormInput
+                label="First Name"
+                name="firstname"
+                value={data.firstname}
+                onChange={handleChange}
+                placeholder="John"
+                required
+              />
+              <FormInput
+                label="Last Name"
+                name="lastname"
+                value={data.lastname}
+                onChange={handleChange}
+                placeholder="Doe"
+                required
+              />
+              <div className="md:col-span-2">
+                <FormInput
+                  label="Email Address"
+                  type="email"
+                  name="email"
+                  value={data.email}
+                  onChange={handleChange}
+                  placeholder="name@company.com"
+                  required
+                />
+              </div>
+              <FormInput
+                label="Password"
+                type="password"
+                name="password"
+                value={data.password}
+                onChange={handleChange}
+                placeholder="••••••••"
+                required
+              />
+              <FormInput
+                label="Confirm Password"
+                type="password"
+                name="confirm-password"
+                value={data['confirm-password']}
+                onChange={handleChange}
+                placeholder="••••••••"
+                required
+              />
 
+              <div className="md:col-span-2 flex items-start gap-4 p-4 bg-gray-50 dark:bg-neutral-950 rounded-2xl border border-gray-100 dark:border-neutral-800">
+                <input id="terms" type="checkbox" className="mt-1 w-5 h-5 border-gray-200 rounded-lg text-amber-500 focus:ring-amber-500/20" required />
+                <label htmlFor="terms" className="text-sm text-gray-500 dark:text-neutral-400 font-medium leading-relaxed">
+                  I agree to the <button type="button" className="text-amber-600 font-black hover:underline uppercase tracking-widest text-xs">Terms of Service</button> and <button type="button" className="text-amber-600 font-black hover:underline uppercase tracking-widest text-xs">Privacy Policy</button>.
+                </label>
+              </div>
 
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="md:col-span-2 w-full py-5 bg-gray-900 dark:bg-amber-500 text-white rounded-2xl font-black text-lg shadow-xl transition-all active:scale-95 disabled:opacity-50 uppercase tracking-widest"
+              >
+                {isSubmitting ? 'Creating Account...' : 'Create Account'}
+              </button>
+            </form>
 
-           <header className="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-48 w-full bg-gray-900 border-b border-gray-200 text-sm py-2.5  dark:bg-neutral-950 dark:border-neutral-700">
-                          <nav className="max-w-[85rem] mx-auto w-full flex justify-between items-center px-4 sm:px-6 lg:px-8">
-
-                              <div className="me-5 text-amber-600 text-2xl">
-                                  {/* <!-- Logo --> */}
-                                  {/* <img className='w-10 h-4' src={logo} alt="OOPS!" /> */}
-                                  𝓛𝓸𝓼𝓽 & 𝓕𝓸𝓾𝓷𝓭
-                                  {/* <!-- End Logo --> */}
-                              </div>
-
-
-
-                              <div className="flex-1 flex flex-row justify-end items-center gap-1">
-                                  {/* <!-- Collapse --> */}
-                                  <div className="md:hidden">
-                                      <button type="button" className="hs-collapse-toggle size-9.5 relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-white hover:bg-white/10 focus:outline-hidden focus:bg-white/10 disabled:opacity-50 disabled:pointer-events-none" id="hs-secondaru-navbar-collapse" aria-expanded="false" aria-controls="hs-secondaru-navbar" aria-label="Toggle navigation" data-hs-collapse="#hs-secondaru-navbar">
-                                          <svg className="hs-collapse-open:hidden size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6" /><line x1="3" x2="21" y1="12" y2="12" /><line x1="3" x2="21" y1="18" y2="18" /></svg>
-                                          <svg className="hs-collapse-open:block shrink-0 hidden size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
-                                          <span className="sr-only">Toggle navigation</span>
-                                      </button>
-                                  </div>
-                                  {/* <!-- End Collapse --> */}
-
-
-
-                                  {/* <!-- Dropdown --> */}
-                                  <div className="transition-transform duration-300 hover:scale-110  hs-dropdown [--placement:bottom-right] relative inline-flex">
-                                      <NavLink to={'/profile'} id="hs-dropdown-account" type="button" className="size-9.5 inline-flex justify-center ml-4 items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none dark:text-black" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                                          <img className="shrink-0 size-9.5 rounded-full" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80" alt="Avatar" />
-                                      </NavLink>
-                                  </div>
-                                  {/* <!-- End Dropdown --> */}
-                              </div>
-                          </nav>
-                      </header>
-                      {/* <!-- ========== END HEADER ========== --> */}
-                      {/* <!-- ========== MAIN CONTENT ========== --> */}
-                      <main id="content" >
-                          {/* <!-- Secondary Navbar --> */}
-                          <div className="md:py-4 bg-white md:border-b border-gray-200 dark:bg-neutral-800 dark:border-neutral-700">
-                              <nav className="relative max-w-[85rem] w-full mx-auto md:flex md:items-center md:gap-3 px-4 sm:px-6 lg:px-8">
-                                  {/* <!-- Collapse --> */}
-                                  <div id="hs-secondaru-navbar" className="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow md:block" aria-labelledby="hs-secondaru-navbar-collapse">
-                                      <div className="overflow-hidden overflow-y-hidden max-h-[75vh] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
-                                          <div className="py-2 md:py-0 flex flex-col md:flex-row md:items-center gap-y-0.5 md:gap-y-0 md:gap-x-6">
-                                              <NavLink
-                                                  className=" px-2 transition-transform duration-300 hover:scale-110 cursor-pointer  py-2 md:py-0 flex items-center font-medium text-sm text-red-600 focus:outline-hidden focus:text-red-600 dark:text-red-500 dark:focus:text-red-500" arial-current="page"
-                                                  to={'/'}
-                                              >
-                                                  <svg className="shrink-0 size-4 me-3 md:me-2 block md:hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" /><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg>
-                                                  Dashboard
-                                              </NavLink>
-                                              <NavLink
-
-
-                                                  className={({ isActive }) =>
-                                                      `  py-2 md:py-0 flex items-center font-medium text-sm
-                                  focus:outline-hidden
-                                 ${isActive ? "dark:text-blue-500 dark:focus:text-blue-500" : "text-white"}`
-                                                  }
-                                                  to={'/resolvedItems'}
-                                              >
-
-                                                  <svg className="shrink-0 size-4 me-3 md:me-2 block md:hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
-
-                                                  <span className="inline-block transition-transform duration-300 hover:scale-110">
-                                                      Resolved Items
-                                                  </span>
-
-
-                                              </NavLink>
-
-
-
-
-                                              <NavLink
-
-
-                                                  className={({ isActive }) =>
-                                                      `transition-transform duration-300 hover:scale-110 cursor-pointer  py-2 md:py-0 flex items-center font-medium text-sm
-                                  focus:outline-hidden
-                                 ${isActive ? "dark:text-blue-500 dark:focus:text-blue-500" : "text-white"}`
-                                                  }
-                                                  to={'/reportli'} >
-
-                                                  <svg className="shrink-0 size-4 me-3 md:me-2 block md:hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2" /><path d="M18 14h-8" /><path d="M15 18h-5" /><path d="M10 6h8v4h-8V6Z" /></svg>
-                                                  Report Lost Items
-
-                                              </NavLink>
-
-                                              <NavLink
-                                                  className={({ isActive }) =>
-                                                      `transition-transform duration-300 hover:scale-110 cursor-pointer  py-2 md:py-0 flex items-center font-medium text-sm
-                                  focus:outline-hidden
-                                 ${isActive ? "dark:text-blue-500 dark:focus:text-blue-500" : "text-white"}`
-                                                  }
-
-                                                  to={'/reportfi'}
-                                              >
-                                                  <svg className="shrink-0 size-4 me-3 md:me-2 block md:hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12h.01" /><path d="M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" /><path d="M22 13a18.15 18.15 0 0 1-20 0" /><rect width="20" height="14" x="2" y="6" rx="2" /></svg>
-                                                  Report Found Items
-                                              </NavLink>
-
-
-
-                                              {/* <!-- Dropdown --> */}{/* <!-- End Dropdown --> */}
-                                          </div>
-                                      </div>
-                                  </div>
-                                  {/* <!-- End Collapse --> */}
-                              </nav>
-                          </div>
-                          {/* <!-- End Secondary Navbar --> */}
-                      </main>
-
-
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <div className="w-full max-w-4xl bg-white rounded-lg shadow dark:border md:mt-0 xl:p-0 dark:bg-neutral-950 dark:border-neutral-700">
-            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                Create an account
-              </h1>
-              <form className="grid grid-cols-1 md:grid-cols-2 gap-4" onSubmit={handlesubmit}>
-                <div className="flex flex-col">
-                  <label htmlFor="firstname" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your First Name</label>
-                  <input onChange={handleChange} type="text" name="firstname" id="firstname" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-800 dark:border-neutral-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="enter your first name" required="" />
-                </div>
-                <div className="flex flex-col">
-                  <label htmlFor="lastname" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Last Name</label>
-                  <input onChange={handleChange} type="text" name="lastname" id="lastname" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-800 dark:border-neutral-700  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="enter your last name" required="" />
-                </div>
-                <div className="flex flex-col md:col-span-2">
-                  <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                  <input onChange={handleChange} type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-800 dark:border-neutral-700  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="" />
-                </div>
-                <div className="flex flex-col">
-                  <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                  <input onChange={handleChange} type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-800 dark:border-neutral-700  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
-                </div>
-                <div className="flex flex-col">
-                  <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
-                  <input onChange={handleChange} type="password" name="confirm-password" id="confirm-password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-800 dark:border-neutral-700  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
-                </div>
-                <div className="flex items-start md:col-span-2">
-                  <div className="flex items-center h-5">
-                    <input id="terms" aria-describedby="terms" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-neutral-800 dark:border-neutral-700 0 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required="" />
-                  </div>
-                  <div className="ml-3 text-sm">
-                    <label htmlFor="terms" className="font-light text-gray-500 dark:text-gray-300">I accept the <a className="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Terms and Conditions</a></label>
-                  </div>
-                </div>
-                <button type="submit" className="md:col-span-2 w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 border cursor-pointer mb-2.5">Create an account</button>
-                <p className="text-sm font-light text-white dark:text-white md:col-span-2">
-                  Already have an account? <Link to="/login" className="text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium dark:text-amber-600">Login here</Link>
-                </p>
-              </form>
+            <div className="mt-12 pt-8 border-t border-gray-100 dark:border-neutral-800 text-center">
+              <p className="text-gray-500 dark:text-neutral-400 font-medium">
+                Already have an account?{' '}
+                <Link to="/login" className="text-amber-600 font-black hover:underline uppercase tracking-widest text-sm">
+                  Log in
+                </Link>
+              </p>
             </div>
           </div>
         </div>
-
-
       </div>
-
+    </Layout>
   )
 }
 
-export default Signup
+export default Signup;

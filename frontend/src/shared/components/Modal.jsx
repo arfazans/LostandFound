@@ -1,16 +1,14 @@
 import React from 'react';
 
-const Modal = ({ isOpen, onClose, children, className = "" }) => {
+export const Modal = ({ isOpen, onClose, children, className = "" }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="fixed inset-0 bg-black bg-opacity-50" onClick={onClose}></div>
-      <div className={`relative bg-white dark:bg-neutral-800 rounded-lg shadow-lg ${className}`}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
+      <div className="fixed inset-0" onClick={onClose}></div>
+      <div className={`relative bg-white dark:bg-neutral-900 rounded-[2.5rem] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300 ${className}`}>
         {children}
       </div>
     </div>
   );
 };
-
-export default Modal;
