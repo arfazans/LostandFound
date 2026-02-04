@@ -43,7 +43,7 @@ function Dashboard() {
 
   const filteredProducts = useMemo(() => {
     if (!products.length) return [];
-    
+
     return products.filter(product => {
       if (isSearchMode) {
         return product.name.toLowerCase().includes(searchkey.toLowerCase());
@@ -77,7 +77,7 @@ function Dashboard() {
               onChange={(e) => setSearchkey(e.target.value)}
               onKeyDown={handleSearch}
               className=""
-            />}
+            />
           </div>
 
           <div className="flex-1 flex flex-row justify-end items-center gap-1">
@@ -299,12 +299,13 @@ function Dashboard() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {
               loading ? (
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-amber-600 text-center">Loading...</div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-amber-600 text-center">Loading... <br /> it will take little time because of free server</div>
+
               ) : (
                 filteredProducts.length > 0 ? (
                   filteredProducts.map((product) => {
                     const imageUrl = product.image;
-                    
+
                     if (product.type === 'lost') {
                       return (
                         <LostItemCard key={product._id} id={product._id} {...product} imageUrl={imageUrl} />
